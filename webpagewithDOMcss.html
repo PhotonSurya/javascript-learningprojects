@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript Mini Projects</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f4f4f4;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.container{
+    width:450px;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 0 15px rgba(0,0,0,0.2);
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+    color:#333;
+}
+
+.section{
+    margin-bottom:35px;
+}
+
+.section p{
+    margin-bottom:10px;
+    color:#444;
+}
+
+button{
+    padding:10px 20px;
+    border:none;
+    border-radius:20px;
+    cursor:pointer;
+    font-size:15px;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+.subscribe-btn{
+    background:red;
+    color:white;
+}
+
+.calc-btn{
+    background:#007bff;
+    color:white;
+}
+
+textarea{
+    width:180px;
+    height:40px;
+    resize:none;
+    padding:8px;
+    border:2px solid #ccc;
+    border-radius:8px;
+    font-size:16px;
+}
+
+textarea:focus{
+    outline:none;
+    border-color:#007bff;
+}
+
+a{
+    color:#007bff;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+a:hover{
+    text-decoration:underline;
+}
+
+#cost{
+    margin-top:15px;
+    font-size:20px;
+    font-weight:bold;
+    color:green;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>JavaScript Mini Projects</h1>
+
+<div class="section">
+    <p><b>YouTube Subscribe Button</b></p>
+
+    <button
+        class="subscribe-btn"
+        onclick="subscribe()">
+        Subscribe
+    </button>
+</div>
+
+<div class="section">
+    <p><b>Rock Paper Scissors</b></p>
+
+    <a href="rockpaperscissorcss.html" target="_blank">Play Game</a>
+</div>
+
+<div class="section">
+    <p><b>Amazon Shipping Calculator</b></p>
+
+    <p>Orders under <b>$40</b> = +$10 shipping</p>
+    <p>Orders over <b>$40</b> = Free shipping</p>
+
+    <table>
+        <tr>
+            <td>
+                <textarea
+                    id="Sum"
+                    rows="1"
+                    placeholder="Cost of order"
+                    onkeydown="checkEnter(event)">
+                </textarea>
+            </td>
+
+            <td>
+                <button class="calc-btn" onclick="getData()">
+                    Calculate
+                </button>
+            </td>
+        </tr>
+    </table>
+
+    <p id="cost"></p>
+
+</div>
+
+</div>
+
+<script>
+function getData() {
+
+    let x = parseInt(document.getElementById("Sum").value);
+
+    if(x < 40)
+        document.getElementById("cost").innerHTML = "$" + (x + 10);
+    else
+        document.getElementById("cost").innerHTML = "$" + x;
+}
+
+function checkEnter(event){
+    if(event.key === "Enter"){
+        event.preventDefault();
+        getData();
+    }
+}
+
+function subscribe(){
+
+    let button = document.querySelector(".subscribe-btn");
+
+    button.innerHTML = "Subscribed";
+    button.style.backgroundColor = "black";
+    button.style.color = "white";
+}
+</script>
+
+</body>
+</html>
