@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            background:linear-gradient(135deg,#4facfe,#00f2fe);
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .container{
+            width:420px;
+            background:white;
+            padding:30px;
+            border-radius:18px;
+            text-align:center;
+            box-shadow:0 10px 25px rgba(0,0,0,0.25);
+        }
+
+        h2{
+            color:#333;
+            margin-bottom:25px;
+        }
+
+        .choice-btn{
+            width:100px;
+            padding:15px;
+            margin:8px;
+            font-size:16px;
+            border:none;
+            border-radius:12px;
+            background:#2196f3;
+            color:white;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .choice-btn:hover{
+            background:#1976d2;
+            transform:translateY(-3px);
+        }
+
+        #result{
+            margin-top:25px;
+            font-size:20px;
+            font-weight:bold;
+            color:#333;
+            min-height:40px;
+        }
+
+        #score{
+            margin-top:20px;
+            padding:15px;
+            background:#f2f2f2;
+            border-radius:10px;
+            font-size:18px;
+            line-height:1.8;
+        }
+
+        .reset-btn{
+            margin-top:20px;
+            padding:12px 30px;
+            border:none;
+            border-radius:25px;
+            background:#e53935;
+            color:white;
+            font-size:16px;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .reset-btn:hover{
+            background:#c62828;
+            transform:scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>🎮 Rock Paper Scissors</h2>
+
+    <button class="choice-btn" onclick="func(0)">Rock</button>
+    <button class="choice-btn" onclick="func(1)">Paper</button>
+    <button class="choice-btn" onclick="func(2)">Scissor</button>
+
+    <p id="result"></p>
+
+    <button class="reset-btn" onclick="
+        score.human = 0;
+        score.comp = 0;
+        localStorage.removeItem('score');
+        show();
+        document.getElementById('result').innerHTML = '';
+    ">
+        Reset Score
+    </button>
+
+    <p id="score"></p>
+
+</div>
+
+<script>
+let compchoice = "";
+let humanchoice = "";
+
+const score = JSON.parse(localStorage.getItem("score")) || {
+    human: 0,
+    comp: 0
+};
+
+window.onload = function () {
+    show();
+};
+
+function show() {
+    document.getElementById("score").innerHTML =
+        "🤖 Computer Score: " + score.comp +
+        "<br>👤 Your Score: " + score.human;
+}
+
+function showResult(message) {
+    document.getElementById("result").innerHTML = message;
+}
+
+function win() {
+    score.human++;
+    showResult(`Computer chose <b>${compchoice}</b>.<br>🎉 You Win!`);
+}
+
+function lose() {
+    score.comp++;
+    showResult(`Computer chose <b>${compchoice}</b>.<br>🤖 Computer Wins!`);
+}
+
+function tie() {
+    showResult(`Both chose <b>${compchoice}</b>.<br>🤝 It's a Tie!`);
+}
+
+function func(x) {
+
+    const choices = ["rock", "paper", "scissor"];
+
+    humanchoice = choices[x];
+    compchoice = choices[Math.floor(Math.random() * 3)];
+
+    const beats = {
+        rock: "scissor",
+        paper: "rock",
+        scissor: "paper"
+    };
+
+    let result = "";
+
+    if (humanchoice === compchoice) {
+        result = "🤝 It's a Tie!";
+    }
+    else if (beats[humanchoice] === compchoice) {
+        result = "🎉 You Win!";
+    }
+    else {
+        result = "🤖 Computer Wins!";
+    }
+
+    alert(
+`You chose: ${humanchoice}
+Computer chose: ${compchoice}
+
+${result}`
+    );
+
+    if (humanchoice === compchoice) {
+        tie();
+    }
+    else if (beats[humanchoice] === compchoice) {
+        win();
+    }
+    else {
+        lose();
+    }
+
+    show();
+
+    localStorage.setItem("score", JSON.stringify(score));
+
+    console.log(score);
+}
+</script>
+
+</body>
+</html>
